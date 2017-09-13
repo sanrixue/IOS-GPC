@@ -9,7 +9,44 @@
 #ifndef MyPrefixHeader_pch
 #define MyPrefixHeader_pch
 
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Availability.h>
+
+#import "Tools.h"
+#import "CreatControls.h"
+#import "Masonry.h"
+#import "DBManager.h"
+//百度地图需要的头文件
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>
+
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>
+#import <BaiduMapAPI_Map/BMKMapView.h>
+
+
+
+//点聚合
+//#import "BMKClusterManager.h"
+
+
+//定位的Framework的头文件
+#import <CoreLocation/CoreLocation.h>
+
+
+
+//自定义导航条
+#import "UINavigationBar+Awesome.h"
+
+
+
+//百度地图Key
+#define BaiDu_API_Key @"h1oDCmey1twPqVvsqlvwSVmx4OXm2uoX"
+
 
 #endif /* MyPrefixHeader_pch */

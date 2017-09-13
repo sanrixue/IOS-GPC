@@ -13,6 +13,9 @@
 #import "UIImageView+WebCache.h"  //下载image&上传image
 #import "Reachability.h"
 #import "Toast+UIView.h"
+#import "AppConfig.h"
+
+
 @protocol ToolsDelegate <NSObject>
 
 @optional

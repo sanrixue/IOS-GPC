@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^MyBlock)(NSString *nameText,UIImage *iconImage);
+
 @interface PersonInfoViewController : UIViewController
+
+@property (nonatomic, copy) MyBlock myBlock;
+
+- (void)returnBlock:(MyBlock)block;
+
 
 @end

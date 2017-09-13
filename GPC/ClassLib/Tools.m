@@ -382,7 +382,7 @@
 		
         [MBProgressHUD showHUDAddedTo:view animated:YES];
     }
-      AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
+    AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];
     mgr.responseSerializer = [AFJSONResponseSerializer serializer];
     [mgr GET:url parameters:params progress:^(NSProgress * _Nonnull downloadProgress) {
         
@@ -406,7 +406,8 @@
 {
 	
 		
-    if (view != nil) {
+    if (view != nil)
+    {
 		
         [MBProgressHUD showHUDAddedTo:view animated:YES];
     }
@@ -416,11 +417,14 @@
     
     
     mgr.responseSerializer = [AFJSONResponseSerializer serializer];
-    //mgr.requestSerializer = [AFHTTPRequestSerializer serializer];
     
-    [mgr POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+   // mgr.requestSerializer  = [AFHTTPRequestSerializer serializer];
+    
+    [mgr POST:url parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData)
+    {
         
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    } progress:^(NSProgress * _Nonnull uploadProgress)
+    {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (view != nil)

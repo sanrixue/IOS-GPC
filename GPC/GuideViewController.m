@@ -6,20 +6,75 @@
 //  Copyright © 2016年 董立峥. All rights reserved.
 //
 
-#import "CarGuideViewController.h"
+#import "GuideViewController.h"
 
-@interface CarGuideViewController ()
+@interface GuideViewController ()
 
 @end
 
-@implementation CarGuideViewController
+@implementation GuideViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor blueColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.title = @"用护指南";
+    self.navigationItem.title = @"用户指南";
+    
+    
+    UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(KSCREENWIDTH * 0.5 - 100, 80, 200, 40)];
+    lab.text = @"使用帮助";
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.font = [UIFont systemFontOfSize:20];
+    lab.textColor = [UIColor grayColor];
+    [self.view addSubview:lab];
+    
+    UILabel *lineLab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 121, KSCREENWIDTH, 1)];
+    lineLab1.backgroundColor = [UIColor lightGrayColor];
+    lineLab1.alpha = 0.5;
+    [self.view addSubview:lineLab1];
+    
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(KSCREENWIDTH * 0.85, 86, 40, 40)];
+    [btn setImage:[UIImage imageNamed:@"che"] forState:UIControlStateNormal];
+    btn.userInteractionEnabled = NO;
+    [self.view addSubview:btn];
+    
+    
+    
+    NSString * url = [NSString stringWithFormat:Main_URL,[NSString stringWithFormat:Content_URL,2]];
+    NSLog(@"地址------>>>>%@",url);
+    
+    [Tools POST:url params:nil superviewOfMBHUD:nil success:^(id responseObj)
+     {
+         NSLog(@"登录成功---->>>>%@",responseObj[@"data"]);
+         if ([responseObj[@"data"][@"type"] isEqualToNumber:@2]) {
+             
+             NSDictionary *dict = responseObj[@"data"];
+             
+             
+             UILabel *ruleLab = [[UILabel alloc] initWithFrame:CGRectMake(10, 125, KSCREENWIDTH-20, 300)];
+             ruleLab.textColor = [UIColor grayColor];
+             ruleLab.numberOfLines = 0;
+             ruleLab.text = dict[@"content"];
+             [self.view addSubview:ruleLab];
+             
+             
+         } else {
+             
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             [alert show];
+             
+         }
+         
+     } failure:^(NSError *error) {
+         
+         NSLog(@"请求出错--->>>%@",error);
+     }];
+    
+
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -32,6 +32,8 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     
+    self.navigationItem.title = @"扫描开锁";
+
 //    UIImageView *bkImage = [[UIImageView alloc] init];
 //    bkImage.frame = self.view.frame;
 //    [bkImage setImage:[UIImage imageNamed:@"qianbaoback"]];
@@ -44,24 +46,10 @@
     isFirst = YES;
     isPush = NO;
 }
+
 -(void)configUI
+
 {
-    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 30)];
-    label.text=@"扫描二维码&条码";
-    label.textColor=[UIColor colorWithRed:35/255.0 green:35/255.0 blue:35/255.0 alpha:0.9];
-    label.font=[UIFont fontWithName:@ "Arial"  size:18];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView=label;
-    
-    
-    //扫描二维码
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:@"back"]forState:UIControlStateNormal];
-    [btn setImageEdgeInsets:UIEdgeInsetsMake(0,-10, 0, 0)];
-    [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
-    btn.bounds = CGRectMake(0, 0, 45, 44);
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem = item;
     
 //    //调用相册图片按钮
 //    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -74,14 +62,6 @@
 //    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];
 //    self.navigationItem.rightBarButtonItem = item1;
 
-}
-
-//返回上级页面
--(void)btnClick
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
 }
 
 

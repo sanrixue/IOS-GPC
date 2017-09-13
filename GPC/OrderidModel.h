@@ -10,4 +10,8 @@
 
 @interface OrderidModel : NSObject
 
+@property (nonatomic, strong) NSDictionary *dict;    
+
++ (OrderidModel *)shareModel;
+
 @end

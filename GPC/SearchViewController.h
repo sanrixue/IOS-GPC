@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ReturnTextBlock)(NSString *searchText);
+
 @interface SearchViewController : UIViewController
+
+@property (nonatomic, copy) ReturnTextBlock returnTextBlock;
+
+- (void)returnText:(ReturnTextBlock)block;
 
 @end

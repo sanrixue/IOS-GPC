@@ -10,8 +10,7 @@
 #import "QRCodeReaderView.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define KSCREENHEIGHT ([UIScreen mainScreen].bounds.size.height)
-#define KSCREENWIDTH ([UIScreen mainScreen].bounds.size.width)
+
 #define widthRate KSCREENWIDTH/320
 #define kGSize [[UIScreen mainScreen] bounds].size
 #define contentTitleColorStr @"666666"
@@ -21,6 +20,9 @@
     AVCaptureSession * session;
     
     NSTimer * countTime;
+    
+    UIView *_backVC;
+    UIView *_smVC;
     
 }
 @property (nonatomic, strong) CAShapeLayer *overlay;
@@ -46,8 +48,8 @@
     
     UIImageView *line = [[UIImageView alloc] initWithFrame: CGRectMake(KSCREENWIDTH/2-65, (KSCREENHEIGHT-300*widthRate)/2, 130, 3)];
     
-    line.image = [UIImage imageNamed:@"ipad_user_code_Scanningline"];
-    line.backgroundColor = [UIColor redColor];
+    line.image = [UIImage imageNamed:@"xian"];
+    line.backgroundColor = [UIColor clearColor];
     
     [self addSubview:line ];
     
@@ -61,6 +63,7 @@
     
     UIImageView * scanZomeBack=[[UIImageView alloc] init];
     scanZomeBack.backgroundColor = [UIColor clearColor];
+    scanZomeBack.image = [UIImage imageNamed:@"saoback"];
     //添加一个背景图片
     CGRect mImagerect = CGRectMake(60*widthRate, (KSCREENHEIGHT-300*widthRate)/2, 200*widthRate, 200*widthRate);
     [scanZomeBack setFrame:mImagerect];
@@ -188,18 +191,34 @@
     [reader addSubview:putBtn];
     putBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     putBtn.layer.borderWidth = 1;
+    [putBtn setImage:[UIImage imageNamed:@"bianhao"] forState:UIControlStateNormal];
+    CGSize strSize = [putBtn.titleLabel.text sizeWithAttributes:@{@"NSFontAttributeName" : putBtn.titleLabel.font                                                                     }];
+    CGFloat totalLen = strSize.width + 5 + putBtn.imageView.image.size.width;
+    CGFloat edgeLen = (KSCREENWIDTH*0.5- totalLen) / 2;
+    if (edgeLen < 10) {
+        edgeLen = 10;
+    }
+    [putBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, edgeLen)];
     
     //开关灯button
     UIButton * turnBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     turnBtn.backgroundColor = [UIColor clearColor];
     turnBtn.frame=CGRectMake(KSCREENWIDTH * 0.25,KSCREENHEIGHT * 0.8,KSCREENWIDTH*0.5,40);
-    [turnBtn setTitle:@"打开手电筒" forState:UIControlStateNormal];
+    [turnBtn setTitle:@"打开手电筒   " forState:UIControlStateNormal];
     [turnBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [turnBtn addTarget:self action:@selector(turnBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
     [reader addSubview:turnBtn];
     turnBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     turnBtn.layer.borderWidth = 1;
-    
+    [turnBtn setImage:[UIImage imageNamed:@"deng"] forState:UIControlStateNormal];
+    CGSize strSize2 = [turnBtn.titleLabel.text sizeWithAttributes:@{@"NSFontAttributeName" : turnBtn.titleLabel.font                                                                     }];
+    CGFloat totalLen2 = strSize2.width + 5 + turnBtn.imageView.image.size.width;
+    CGFloat edgeLen2 = (KSCREENWIDTH*0.5- totalLen2) / 2;
+    if (edgeLen2 < 10) {
+        edgeLen2 = 10;
+    }
+    [turnBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, edgeLen2)];
+ 
     
     UIButton * shuomingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shuomingBtn.backgroundColor = [UIColor clearColor];
@@ -214,10 +233,71 @@
 
 - (void)putBtnClick {
     NSLog(@"put~~~~~~~~~~");
+    
+    
+    
+    
 }
 
 - (void)shuomingBtnClick {
     NSLog(@"shuoming~~~~~~~~~~~~~");
+    
+    _backVC = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KSCREENWIDTH, KSCREENHEIGHT)];
+    _backVC.backgroundColor = [UIColor blackColor];
+    _backVC.alpha = 0.3;
+    [self addSubview:_backVC];
+    
+    
+    _smVC = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 400)];
+    _smVC.center = self.center;
+    _smVC.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_smVC];
+    
+    
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(287, -15, 30, 30)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"叉叉"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+    btn.layer.cornerRadius = 16;
+    btn.layer.masksToBounds = YES;
+    [_smVC addSubview:btn];
+    
+    
+    NSString * url = [NSString stringWithFormat:Main_URL,[NSString stringWithFormat:Content_URL,7]];
+    NSLog(@"地址------>>>>%@",url);
+    
+    [Tools POST:url params:nil superviewOfMBHUD:nil success:^(id responseObj)
+     {
+         NSLog(@"登录成功---->>>>%@",responseObj[@"data"]);
+         if ([responseObj[@"data"][@"type"] isEqualToNumber:@7]) {
+             
+             NSDictionary *dict = responseObj[@"data"];
+             
+             
+             UILabel *ruleLab = [[UILabel alloc] initWithFrame:CGRectMake(10, 80, KSCREENWIDTH-20, 200)];
+             ruleLab.textColor = [UIColor grayColor];
+             ruleLab.numberOfLines = 0;
+             ruleLab.text = dict[@"content"];
+             [_smVC addSubview:ruleLab];
+             
+             
+         } else {
+             
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"请检查您的网络" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+             [alert show];
+             
+         }
+         
+     } failure:^(NSError *error) {
+         
+         NSLog(@"请求出错--->>>%@",error);
+     }];
+    
+}
+
+- (void)btnClick {
+    [_backVC removeFromSuperview];
+    [_smVC removeFromSuperview];
+
 }
 
 - (void)turnBtnEvent:(UIButton *)button_
@@ -226,9 +306,12 @@
     if (button_.selected)
     {
         [self turnTorchOn:YES];
+        
+        [button_ setImage:[UIImage imageNamed:@"dengH"] forState:UIControlStateNormal];
     }
     else{
         [self turnTorchOn:NO];
+        [button_ setImage:[UIImage imageNamed:@"deng"] forState:UIControlStateNormal];
     }
     
 }

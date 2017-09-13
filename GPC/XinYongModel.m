@@ -12,10 +12,12 @@
 
 - (instancetype)initWithDict:(NSDictionary *)dic {
     if (self = [super init]) {
-        self.icon = [dic valueForKey:@"icon"];
-        self.history_time = [dic valueForKey:@"history_time"];
-        self.history_thing = [dic valueForKey:@"history_thing"];
-        self.history_result = [dic valueForKey:@"history_result"];
+        self.history_time = [dic valueForKey:@"create_time"];
+        self.history_thing = [dic valueForKey:@"content"];
+        self.history_result = [dic valueForKey:@"score"];
+        self.history_id = [dic valueForKey:@"id"];
+        self.history_uid = [dic valueForKey:@"uid"];
+        self.history_type = [dic valueForKey:@"type"];
     }
     return self;
 }

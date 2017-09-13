@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CarGuideViewController : UIViewController
+@interface GuideViewController : UIViewController
 
 @end

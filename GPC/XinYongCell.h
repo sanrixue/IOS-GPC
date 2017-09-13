@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class XinYongModel;
+
+static NSString *xinyongIndentifier = @"xinyongCell";
+
 @interface XinYongCell : UITableViewCell
+
+@property (nonatomic, strong) XinYongModel *xinyongModel;
+
+@property (nonatomic, strong) UILabel *historyTime;
+@property (nonatomic, strong) UILabel *historyThing;
+@property (nonatomic, strong) UILabel *historyResult;
 
 @end

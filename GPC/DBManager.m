@@ -41,7 +41,6 @@
             //创建表 不存在 则创建
             [self creatTable];
             
-            [self creatTable2];
             
         }else {
             NSLog(@"database open failed:%@",_database.lastErrorMessage);
@@ -53,7 +52,7 @@
 #pragma mark - 创建表
 - (void)creatTable {
 
-    NSString *sql = @"create table if not exists model(user_id integer primary key AUTOINCREMENT,user_name text,user_icon text,user_telephone text,user_age text,user_birthday text,token text,user_sex text)";
+    NSString *sql = @"create table if not exists model(user_id integer primary key AUTOINCREMENT,user_name text,user_logo text,user_phone text,user_score text,user_wallet text,user_type text,user_idCard text,user_status text,user_deposit text)";
     
     //创建表 如果不存在则创建新的表
     BOOL isSuccees = [_database executeUpdate:sql];
@@ -62,16 +61,6 @@
     }
 }
 
-- (void)creatTable2 {
-    
-    NSString *sql = @"create table if not exists device(device_num integer primary key AUTOINCREMENT,name text,title text,portrait text,sim_code text)";
-    
-    //创建表 如果不存在则创建新的表
-    BOOL isSuccees = [_database executeUpdate:sql];
-    if (!isSuccees) {
-        NSLog(@"creatTable error:%@",_database.lastErrorMessage);
-    }
-}
 
 #pragma mark - 获取文件的全路径
 
@@ -91,30 +80,18 @@
     }
 }
 
-- (void)insertUserModel:(BMUserModel *)userModel {
-    NSString *sql = @"insert into model(user_id,user_name,user_icon,user_telephone,user_age,user_birthday,token,user_sex) values (?,?,?,?,?,?,?,?)";
+- (void)insertUserModel:(UserModel *)userModel {
+    NSString *sql = @"insert into model(user_id,user_name,user_logo,user_phone,user_score,user_wallet,user_type,user_idCard,user_status,user_deposit) values (?,?,?,?,?,?,?,?,?,?)";
     if ([self userisExistModelId:userModel.user_id]) {
         NSLog(@"数据已经存在");
         return;
     }
-    BOOL isSuccess= [_database executeUpdate:sql,userModel.user_id,userModel.user_name,userModel.user_icon,userModel.user_telephone,userModel.user_age,userModel.user_birthday,userModel.token,userModel.user_sex];
+    BOOL isSuccess= [_database executeUpdate:sql,userModel.user_id,userModel.user_name,userModel.user_logo,userModel.user_phone,userModel.user_score,userModel.user_wallet,userModel.user_type,userModel.user_idCard,userModel.user_status,userModel.user_deposit];
     if (isSuccess) {
         NSLog(@"数据库收藏成功");
     }
 }
 
-- (void)insertDeviceModel:(BMDeviceModel *)deviceModel {
-    NSString *sql = @"insert into device(device_num,name,title,portrait,sim_code) values (?,?,?,?,?)";
-    if ([self deviceisExistModelId:deviceModel.device_num]) {
-        NSLog(@"数据已经存在");
-        return;
-    }
-    BOOL isSuccess= [_database executeUpdate:sql,deviceModel.device_num,deviceModel.name,deviceModel.title,deviceModel.portrait,deviceModel.sim_code];
-    if (isSuccess) {
-        NSLog(@"数据库收藏成功");
-    }
-
-}
 
 //查找是否存在
 - (BOOL)userisExistModelId:(NSString *)modelId {
@@ -127,15 +104,6 @@
     }
 }
 
-- (BOOL)deviceisExistModelId:(NSString *)modelId {
-    NSString *sql = @"select * from device where device_num = ?";
-    FMResultSet *rs = [_database executeQuery:sql,modelId];
-    if ([rs next]) {
-        return YES;
-    }else{
-        return NO;
-    }
-}
 
 //删除
 - (void)deleteUserModel
@@ -149,33 +117,21 @@
     }
 }
 
-//删除device
-- (void)deleteDeviceallModel
-{
-    NSString *sql = @"delete from device";
-    BOOL isSuccess= [_database executeUpdate:sql];
+
+////修改
+- (void)upadteUserModelModelName:(NSString *)modelName FromModelId:(NSString *)modelId {
+    NSString *sql = @"update model set user_name = ? where user_id = ?";
+    BOOL isSuccess= [_database executeUpdate:sql,modelName,modelId];
     if (!isSuccess) {
-        NSLog(@"删除失败: %@",_database.lastErrorMessage);
+        NSLog(@"修改失败: %@",_database.lastErrorMessage);
     } else {
-        NSLog(@"数据库删除收藏成功");
+        NSLog(@"数据库修改成功");
     }
 }
 
-- (void)deleteDeviceallModel:(NSString *)modelId
-{
-    NSString *sql = @"delete from device where device_num = ?";
-    BOOL isSuccess= [_database executeUpdate:sql,modelId];
-    if (!isSuccess) {
-        NSLog(@"删除失败: %@",_database.lastErrorMessage);
-    } else {
-        NSLog(@"数据库删除收藏成功");
-    }
-}
-
-//修改
-- (void)upadteUserModelModelName:(NSString *)modelName ModelSex:(NSString *)modelSex ModelBirthday:(NSString *)modelBirthday ModelIcon:(NSString *)modelIcon ForModelId:(NSString *)modelId {
-    NSString *sql = @"update model set user_name = ?, user_sex = ?, user_birthday = ?, user_icon = ? where user_id = ?";
-    BOOL isSuccess= [_database executeUpdate:sql,modelName,modelSex,modelBirthday,modelIcon,modelId];
+- (void)upadteUserModelModelStatus:(NSString *)modelStatus FromModelId:(NSString *)modelId {
+    NSString *sql = @"update model set user_status = ? where user_id = ?";
+    BOOL isSuccess= [_database executeUpdate:sql,modelStatus,modelId];
     if (!isSuccess) {
         NSLog(@"修改失败: %@",_database.lastErrorMessage);
     } else {
@@ -191,36 +147,17 @@
     NSMutableArray *ary=[[NSMutableArray alloc]init];
     while ([rs next]) {
         
-        BMUserModel *model=[[BMUserModel alloc]init];
+        UserModel *model=[[UserModel alloc]init];
         model.user_id = [rs stringForColumn:@"user_id"];
         model.user_name = [rs stringForColumn:@"user_name"];
-        model.user_icon = [rs stringForColumn:@"user_icon"];
-        model.user_telephone = [rs stringForColumn:@"user_telephone"];
-        model.user_age = [rs stringForColumn:@"user_age"];
-        model.user_birthday = [rs stringForColumn:@"user_birthday"];
-        model.token = [rs stringForColumn:@"token"];
-        model.user_sex = [rs stringForColumn:@"user_sex"];
-        [ary addObject:model];
-        
-    }
-    
-    return ary;
-}
-
-- (NSArray *)selectAllDevice
-{
-    NSString *sql=@"select * from device";
-    FMResultSet *rs=[_database executeQuery:sql];
-    NSMutableArray *ary=[[NSMutableArray alloc]init];
-    while ([rs next]) {
-        
-        BMDeviceModel *model=[[BMDeviceModel alloc]init];
-        model.device_num = [rs stringForColumn:@"device_num"];
-        model.name = [rs stringForColumn:@"name"];
-        model.title = [rs stringForColumn:@"title"];
-        model.portrait = [rs stringForColumn:@"portrait"];
-        model.sim_code = [rs stringForColumn:@"sim_code"];
-        
+        model.user_logo = [rs stringForColumn:@"user_logo"];
+        model.user_phone = [rs stringForColumn:@"user_phone"];
+        model.user_score = [rs stringForColumn:@"user_score"];
+        model.user_wallet = [rs stringForColumn:@"user_wallet"];
+        model.user_type = [rs stringForColumn:@"user_type"];
+        model.user_idCard = [rs stringForColumn:@"user_idCard"];
+        model.user_status = [rs stringForColumn:@"user_status"];
+        model.user_deposit = [rs stringForColumn:@"user_deposit"];
         [ary addObject:model];
         
     }
@@ -236,36 +173,19 @@
     NSMutableArray *ary=[[NSMutableArray alloc]init];
     while ([rs next]) {
     
-        BMUserModel *model = [[BMUserModel alloc]init];
+        UserModel *model=[[UserModel alloc]init];
         model.user_id = [rs stringForColumn:@"user_id"];
         model.user_name = [rs stringForColumn:@"user_name"];
-        model.user_icon = [rs stringForColumn:@"user_icon"];
-        model.user_telephone = [rs stringForColumn:@"user_telephone"];
-        model.user_age = [rs stringForColumn:@"user_age"];
-        model.user_birthday = [rs stringForColumn:@"user_birthday"];
-        model.token = [rs stringForColumn:@"token"];
-        model.user_sex = [rs stringForColumn:@"user_sex"];
+        model.user_logo = [rs stringForColumn:@"user_logo"];
+        model.user_phone = [rs stringForColumn:@"user_phone"];
+        model.user_score = [rs stringForColumn:@"user_score"];
+        model.user_wallet = [rs stringForColumn:@"user_wallet"];
+        model.user_type = [rs stringForColumn:@"user_type"];
+        model.user_idCard = [rs stringForColumn:@"user_idCard"];
+        model.user_status = [rs stringForColumn:@"user_status"];
+        model.user_deposit = [rs stringForColumn:@"user_deposit"];
         [ary addObject:model];
-    }
-    return [ary firstObject];
-}
 
-- (instancetype)selectOneDevice:(NSString *)deviceNum
-{
-    
-    
-    NSString *sql = [NSString stringWithFormat:@"select * from device where device_num =%@",deviceNum];
-    FMResultSet *rs = [_database executeQuery:sql];
-    NSMutableArray *ary=[[NSMutableArray alloc]init];
-    while ([rs next]) {
-        
-        BMDeviceModel *model = [[BMDeviceModel alloc]init];
-        model.device_num = [rs stringForColumn:@"device_num"];
-        model.name = [rs stringForColumn:@"name"];
-        model.title = [rs stringForColumn:@"title"];
-        model.portrait = [rs stringForColumn:@"portrait"];
-        model.sim_code = [rs stringForColumn:@"sim_code"];
-        [ary addObject:model];
     }
     return [ary firstObject];
 }

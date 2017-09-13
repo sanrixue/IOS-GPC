@@ -218,7 +218,7 @@ static CGFloat IMAGE_WIDTH;
         NSData * imagedata = UIImageJPEGRepresentation(photoAsset.screenWidthImage, 0.3);
         [imagearray addObject:imagedata];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME object:imagearray];
+  //  [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_NAME object:imagearray];
 
     [self dismiss];
 }

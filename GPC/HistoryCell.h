@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class HistoryModel;
+
+static NSString *historyIndentifier = @"historyCell";
+
 @interface HistoryCell : UITableViewCell
+
+@property (nonatomic, strong) HistoryModel *historyModel;
+
+@property (nonatomic, strong) UILabel *historyTime;
+@property (nonatomic, strong) UILabel *historyThing;
+@property (nonatomic, strong) UILabel *historyResult;
 
 @end

@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class TravleModel;
+
+static NSString *travleIndentifier = @"travleCell";
+
 @interface TravleCell : UITableViewCell
+
+@property (nonatomic, strong) TravleModel *travleModel;
+
+@property (nonatomic, strong) UILabel *time;
+@property (nonatomic, strong) UILabel *begin;
+@property (nonatomic, strong) UILabel *end;
+@property (nonatomic, strong) UILabel *pay;
 
 @end

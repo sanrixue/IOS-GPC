@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class DetailModel;
+
+static NSString *detailIndentifier = @"detailCell";
+
 @interface DetailCell : UITableViewCell
+
+@property (nonatomic, strong) DetailModel *detailModel;
+
+@property (nonatomic, strong) UILabel *detailTime;
+@property (nonatomic, strong) UILabel *detailThing;
+@property (nonatomic, strong) UILabel *detailResult;
 
 @end

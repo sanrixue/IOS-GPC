@@ -64,6 +64,7 @@
 //设置加载图片 颜色
 #define COLOR(R, G, B, A) [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:A]
 #define loadImage(Name)  [UIImage   imageNamed:Name]
+
 #define LineColor COLOR(223, 223, 223, 1)  //常用灰色线条的颜色
 #define CommonBlueColor COLOR(0, 155, 200, 1) //整体蓝
 
@@ -72,7 +73,6 @@
 #define   KNagHEIGHT  self.navigationController.navigationBar.bounds.size.height-20
 #define   KSCREENWIDTH  [UIScreen mainScreen].bounds.size.width
 #define   KSCREENHEIGHT  [UIScreen mainScreen].bounds.size.height
-
 
 
 
@@ -89,9 +89,9 @@
 #define YOUTUIAPPSECRET @""
 
 //Mob  appkey
-#define YOUMAPPKEY @"5660fff767e58ebb3b007811"
+#define YOUMAPPKEY @""
 
-#define MobAppKey @"cfdc3f9725ac"
+#define MobAppKey @""
 
 //新浪
 #define SinaWBAppKey @"1286413555"
@@ -126,110 +126,53 @@
 
 /****************************请求地址*******************************/
 
-// ** 根URL
-#define Main_URL @"http://121.43.108.95:8081/water/%@"
+//根URL
+#define Main_URL @"http://mcc.shlantian.cn:8081/gpc/%@"
 
-// ** 登录接口
+//登录接口
 #define Login_URL @"app_login"
 
-// ** 验证码接口
-#define Verification_URL @"hq_yzm?mobile=%@"
-
-// ** 注册接口
-#define Registered_URL @"app_reg"
-
-// ** 忘记密码接口
-#define Forget_URL @"app_zhaohui_pwd"
-
-// ** 首页文章刷新
-#define HOME_URL @"app_article_admin?page=%d&type=2"
-
-// ** 首页搜索文章
-#define Search_Url @"app_article_admin"
+//验证码接口
+#define Verification_URL @"get_yzm?phone=%@"
 
 
+//首页自行车搜索
+#define Bycicle_URL @"to_LatLng?lat=%f&lng=%f"
 
-// ** 帮助与反馈
-//帮助接口
-#define help_URL @"app_help_feedback"
-//反馈接口
-#define feedback_URL @"app_feedback"
-
+//用户意见反馈
+#define Fankui_URL @"contentInsert?uid=%@&content=%@"
 
 
+//修改个人信息
+#define Upadta_URL @"userUpdata"
 
-// ** 修改个人信息接口
-#define Modify_URL @"app_update_userinfo"
+//我的行程
+#define Record_URL @"record"
 
+//行程详情
+#define Details_URL @"record_details"
 
-
-// ** 系统通知
-#define customer_url @"app_content_select?type=1"
-
-// ** 布水圈子的文章，所有的文章接口     
-#define All_circle_URL @"app_article_admin?page=%d&type=1"
-
-// ** 我的收藏接口
-#define Collection_URL @"my_shoucang"
-
-// ** 我的发布接口
-#define Releas_URL @"my_fabu"
+//实名认证
+#define Realname_URL @"authenticationAdd"
 
 
+//查询（1、信用积分解读 2、用户指南 3、意见反馈 4、版本更新 5、联系我们 6、关于我们  7、扫码使用说明）uid只有意见反馈的有
+#define Content_URL @"contentByType?type=%d"
 
+//积分列表
+#define ScoreAll_URL @"scoreAll"
 
-// ** 发布圈子
-#define AddArticle_URL @"app_addArticle"
+//积分总和
+#define ScoreSum_URL @"scoreSum?uid=%@"
 
+//故障提交
+#define Fault_URL @"faultAdd"
 
+//钱包明细
+#define Mingxi_URL @"moneyListByUid"
 
-// ** 文章详情页看的H5接口      传入文章的唯一ID  和自己的USER id
-#define HTML_HOME_INFO @"http://121.43.108.95:8081/water/view/appH5/article.html?id=%@&uid=%@"
-
-// ** 布水圈子详情页面的H5接口   传入文章的唯一ID  和自己的USER id
-#define HTML5_INFO @"http://121.43.108.95:8081/water/view/appH5/home3.html?id=%@&uid=%@"
-
-
-// ** 收藏文章接口
-#define Collection_the_url @"app_addData"
-
-
-// ** 系统通知
-#define NOTICE @"app_tz_xitong"
-
-
-
-// ** 文章评论列表接口
-#define Collection_info_URL @"app_comment_page"
-
-// ** 评论文章的接口
-#define pinglun_URL @"addpinglun"
-
-
-
-
-
-
-
-
-// ** 实时数据接口
-#define now_data_URL @"app_queryshishi?uid=%@"
-
-
-
-// ** 添加布水设备接口
-#define AddNO_URL @"view_add"
-
-
-
-
-
-
-
-
-
-
-
+//我的消息
+#define Message_URL @"messageSee"
 
 #endif
 

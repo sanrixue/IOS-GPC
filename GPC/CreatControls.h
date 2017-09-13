@@ -22,21 +22,10 @@
 //添加透明Button
 - (void)button:(UIButton *)button Frame:(CGRect)frame Selector:(SEL)selector;
 
-//绑定页面textField
-- (void)bindingText:(UITextField *)text Title:(NSString *)title Frame:(CGRect)frame Image:(UIImage *)image;
-
-- (void)bindingText:(UITextField *)text Title:(NSString *)title Frame:(CGRect)frame;
 
 //添加Label
 - (void)label:(UILabel *)label Name:(NSString *)name andFrame:(CGRect)frame;
 
-//家人页面TextFiled
-- (void)faimlyText:(UITextField *)text;
-
-//家人页面Label
-- (void)faimlyLab:(UILabel *)label Text:(NSString *)text;
-
-//家人列表Label
-- (void)faimlyLab:(UILabel *)label Number:(NSInteger)number;
+- (void)historyLab:(UILabel *)label andNumber:(NSInteger)number;
 
 @end
