@@ -127,7 +127,7 @@
 /****************************请求地址*******************************/
 
 //根URL
-#define Main_URL @"http://mcc.shlantian.cn:8081/gpc/%@"
+#define Main_URL @"http://123.206.206.45:8081/gpc/%@"
 
 //登录接口
 #define Login_URL @"app_login"

@@ -100,8 +100,11 @@
 - (void)testBtnClick:(UIButton *)sender {
     NSLog(@"获取验证");
     
-    isPhone = [Tools isMobileNumber:_phone.text];
+//    isPhone = [Tools isMobileNumber:_phone.text];
     
+
+    isPhone = [Tools isMobileNumbers:_phone.text];
+
     if (isPhone==YES)
     {
         NSString * urlStr = [NSString stringWithFormat:Verification_URL,_phone.text];

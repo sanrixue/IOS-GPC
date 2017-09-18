@@ -422,6 +422,11 @@
         
 
         DBManager *model = [[DBManager sharedManager] selectOneModel];
+        
+        if (model ==nil ) {
+            return nil;
+        }
+        
         NSMutableArray *mutArray = [NSMutableArray array];
         [mutArray addObject:model];
         UserModel *userModel = mutArray[0];
@@ -485,7 +490,8 @@
  
         return _headerView;
         
-    }else{
+    }
+    else{
         
         return nil;
     }

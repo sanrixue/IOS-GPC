@@ -99,6 +99,9 @@
 //判断是否为电话号码
 + (BOOL)isMobileNumber:(NSString *)telephoneNum;
 
++(BOOL)isMobileNumbers:(NSString *)mobileNum;
+
+
 //判断是否为邮箱
 + (BOOL)isEmail:(NSString *)email;
 
